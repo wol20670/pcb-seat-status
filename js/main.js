@@ -147,12 +147,10 @@ function showNearbyWithT1(lat, lng, query) {
   });
 }
 
-/* ✅ 거리순 정렬 기능 추가된 showNearby */
 function showNearby(lat, lng, query) {
   map.setView([lat, lng], 15);
   const mainMarker = L.marker([lat, lng]).addTo(map).bindPopup(`검색 위치: ${query}`).openPopup();
   markers.push(mainMarker);
-
   const names = ["ACE PC방", "플레이존", "제로PC", "탑PC방", "피닉스", "인벤PC", "라온PC", "포텐PC"];
   const mocks = [];
   for (let i = 0; i < 8; i++) {
@@ -172,16 +170,13 @@ function showNearby(lat, lng, query) {
       distance
     });
   }
-
   mocks.sort((a, b) => a.distance - b.distance);
-
   const list = document.getElementById("list");
   list.innerHTML = `<h3>${query} 주변 PC방</h3>`;
   mocks.forEach(pc => {
     const marker = L.marker([pc.lat, pc.lng]).addTo(map)
       .bindPopup(`${pc.name}<br>좌석 ${pc.available}/${pc.total}`);
     markers.push(marker);
-
     const div = document.createElement("div");
     div.className = "pcbang-card";
     div.innerHTML = `
@@ -193,11 +188,13 @@ function showNearby(lat, lng, query) {
   });
 }
 
+/* ✅ 수정된 GPS 기능 - 주변 모의 PC방 자동 생성 */
 function setGPS() {
   if (!navigator.geolocation) {
     alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
     return;
   }
+
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       const lat = pos.coords.latitude;
@@ -207,10 +204,44 @@ function setGPS() {
       const marker = L.marker([lat, lng]).addTo(map)
         .bindPopup("현재 위치").openPopup();
       markers.push(marker);
+
+      const names = ["ACE PC방", "플레이존", "제로PC", "탑PC방", "피닉스", "인벤PC", "라온PC", "포텐PC"];
+      const mockPCs = [];
+      for (let i = 0; i < 8; i++) {
+        const r = Math.sqrt(Math.random()) * 0.004;
+        const theta = Math.random() * 2 * Math.PI;
+        const cafeLat = lat + r * Math.cos(theta);
+        const cafeLng = lng + r * Math.sin(theta);
+        const available = Math.floor(Math.random() * 40);
+        const distance = calculateDistance(lat, lng, cafeLat, cafeLng);
+        mockPCs.push({
+          id: "gps-" + i,
+          name: names[i],
+          lat: cafeLat,
+          lng: cafeLng,
+          available,
+          total: 40,
+          distance
+        });
+      }
+
+      mockPCs.sort((a, b) => a.distance - b.distance);
+
       const list = document.getElementById("list");
-      list.innerHTML = `
-        <h3>현재 위치</h3>
-        <p class="status">위도: ${lat.toFixed(5)}, 경도: ${lng.toFixed(5)}</p>`;
+      list.innerHTML = `<h3 style="color:#374151">현재 위치 주변 PC방</h3>`;
+      mockPCs.forEach(pc => {
+        const marker = L.marker([pc.lat, pc.lng]).addTo(map)
+          .bindPopup(`${pc.name}<br>좌석 ${pc.available}/${pc.total}`);
+        markers.push(marker);
+        const div = document.createElement("div");
+        div.className = "pcbang-card";
+        div.innerHTML = `
+          <h3>${pc.name}</h3>
+          <p class="status">좌석 현황: ${pc.available} / ${pc.total}</p>
+          <p class="status">거리: ${Math.round(pc.distance)}m</p>
+          <button onclick="openModal('${pc.id}', '${pc.name}')">좌석 보기</button>`;
+        list.appendChild(div);
+      });
     },
     (err) => {
       alert("위치 정보를 가져오지 못했습니다. 브라우저 권한을 확인해주세요.");

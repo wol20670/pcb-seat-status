@@ -1,0 +1,201 @@
+body {
+  font-family: 'Pretendard', sans-serif;
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+/* 헤더 */
+header {
+  background-color: #1e40af;
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* 검색창 영역 */
+#controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  flex-wrap: wrap;
+}
+
+#search-input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 200px;
+}
+
+#search-btn,
+#gps-btn {
+  padding: 10px 14px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+#search-btn:hover,
+#gps-btn:hover {
+  background-color: #1e3a8a;
+}
+
+/* 지도 */
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+/* 리스트 영역 */
+#list {
+  padding: 16px;
+}
+
+/* 라디오 버튼 */
+.radio-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* PC방 카드 */
+.pcbang-card {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s ease-in-out, box-shadow 0.2s;
+}
+
+.pcbang-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.pcbang-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e3a8a;
+}
+
+.status {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* 버튼 */
+button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1e3a8a;
+}
+
+/* 모달 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 좌석 그리드 */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* 좌석 */
+.seat {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+}
+
+.seat:hover {
+  transform: scale(1.1);
+}
+
+/* 좌석 상태 색상 */
+.available {
+  background: #16a34a;
+}
+
+.using {
+  background: #dc2626;
+}
+
+.reserved {
+  background: #eab308;
+}
+
+/* 닫기 버튼 */
+.close-btn {
+  margin-top: 15px;
+  background: #374151;
+}
+
+.close-btn:hover {
+  background: #111827;
+}

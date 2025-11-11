@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PC방 자리 현황 플랫폼</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header>PC방 자리 현황 플랫폼</header>
+  <div id="controls">
+    <div class="radio-group">
+      <label><input type="radio" name="searchType" value="region" checked> 지역 검색</label>
+      <label><input type="radio" name="searchType" value="pcbang"> PC방 검색</label>
+    </div>
+    <input type="text" id="search-input" placeholder="검색어를 입력하세요" />
+    <button id="search-btn">검색</button>
+    <button id="gps-btn"><i class="fa-solid fa-location-crosshairs"></i> GPS 위치 설정</button>
+  </div>
+  <div id="map"></div>
+  <section id="list"></section>
+
+  <div id="seatModal" class="modal">
+    <div class="modal-content">
+      <h2 id="seatTitle"></h2>
+      <div id="seatGrid" class="seat-grid"></div>
+      <p id="seatInfo" style="margin-top:12px; color:#374151; font-size:0.95rem;"></p>
+      <button class="close-btn" onclick="closeModal()">닫기</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./js/main.js" defer></script>
+</body>
+</html>

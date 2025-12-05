@@ -12,3 +12,4 @@ export function addMarker(lat, lng, popup) {
   markers.push(marker);
   return marker;
 }
+// marker.js로 이름 변경

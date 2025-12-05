@@ -1,4 +1,5 @@
-let seatTimers = {};
+// js/ui/modal.js
+import { seatTimers } from "../core/state.js";
 
 export function openModal(id, name) {
   const modal = document.getElementById("seatModal");
@@ -6,7 +7,6 @@ export function openModal(id, name) {
   const seatInfo = document.getElementById("seatInfo");
 
   document.getElementById("seatTitle").textContent = `${name} 좌석 현황`;
-
   grid.innerHTML = "";
   seatInfo.textContent = "좌석을 클릭하면 남은 시간이 표시됩니다.";
 
@@ -17,7 +17,6 @@ export function openModal(id, name) {
 
   for (let i = 1; i <= 40; i++) {
     const div = document.createElement("div");
-
     let status = statuses[Math.floor(Math.random() * statuses.length)];
     div.className = `seat ${status}`;
     div.textContent = i;

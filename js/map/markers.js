@@ -1,15 +1,17 @@
-import { map } from "./mapInit.js";
+// js/map/markers.js
+import { map, clearMarkers as _clearMarkers, addMarker as _addMarker } from "../core/state.js";
 
-let markers = [];
-
-export function clearMarkers() {
-  markers.forEach(m => map.removeLayer(m));
-  markers = [];
+export function clearMap() {
+  _clearMarkers();
+  const list = document.getElementById("list");
+  if (list) list.innerHTML = "";
 }
 
-export function addMarker(lat, lng, popup) {
-  const marker = L.marker([lat, lng]).addTo(map).bindPopup(popup);
-  markers.push(marker);
-  return marker;
+export function addMarker(lat, lng, popupHtml = null, open = false) {
+  let marker = L.marker([lat, lng]).addTo(map);
+  if (popupHtml) {
+    marker = marker.bindPopup(popupHtml);
+    if (open) marker.openPopup();
+  }
+  _addMarker(marker);
 }
-// marker.js로 이름 변경

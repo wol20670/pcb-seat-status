@@ -1,7 +1,8 @@
+// js/main.js
 import { loadPCBangData } from "./api/pcbangAPI.js";
 import { initMap } from "./map/mapInit.js";
-import { handleSearch } from "./search/searchHandler.js";
-import { setGPS } from "./search/gpsSearch.js";
+import { handleSearch } from "./search/searchController.js";
+import { setGPS } from "./search/gps.js";
 
 window.addEventListener("DOMContentLoaded", async () => {
   await loadPCBangData();

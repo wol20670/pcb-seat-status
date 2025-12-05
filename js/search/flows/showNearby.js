@@ -1,9 +1,9 @@
 // js/search/flows/showNearby.js
 import { map } from "../../core/state.js";
 import { addMarker, clearMap } from "../../map/markers.js";
-import { calculateDistance } from "../../core/utils.js";
+import { calculateDistance, getAddress } from "../../core/utils.js";
 
-export function showNearby(lat, lng, query) {
+export async function showNearby(lat, lng, query) {
   clearMap();
   map.setView([lat, lng], 15);
 
@@ -21,6 +21,9 @@ export function showNearby(lat, lng, query) {
     const available = Math.floor(Math.random() * 40);
     const distance = calculateDistance(lat, lng, cafeLat, cafeLng);
 
+    // ★ 주소 요청 (Reverse Geocoding)
+    const address = await getAddress(cafeLat, cafeLng);
+
     mocks.push({
       id: `mock-${i}`,
       name: names[i % names.length],
@@ -29,6 +32,7 @@ export function showNearby(lat, lng, query) {
       available,
       total: 40,
       distance,
+      address // ★ 추가
     });
   }
 
@@ -38,13 +42,19 @@ export function showNearby(lat, lng, query) {
   list.innerHTML = `<h3>${query} 주변 PC방</h3>`;
 
   mocks.forEach(pc => {
-    addMarker(pc.lat, pc.lng, `${pc.name}<br>좌석 ${pc.available}/${pc.total}`);
+    // 마커 팝업에 주소까지 포함
+    addMarker(
+      pc.lat,
+      pc.lng,
+      `${pc.name}<br>${pc.address}<br>좌석 ${pc.available}/${pc.total}`
+    );
 
     const div = document.createElement("div");
     div.className = "pcbang-card";
     div.innerHTML = `
       <h3>${pc.name}</h3>
-      <p class="status">좌석 현황: ${pc.available}/${pc.total}</p>
+      <p class="status">주소: ${pc.address}</p>
+      <p class="status">좌석 현황: ${pc.available} / ${pc.total}</p>
       <p class="status">거리: ${Math.round(pc.distance)}m</p>
       <button onclick="openModal('${pc.id}', '${pc.name}')">좌석 보기</button>
     `;

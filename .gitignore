@@ -1,0 +1,13 @@
+# Python venv
+venv/
+env/
+
+# VSCode settings
+.vscode/
+
+# Mac / Windows OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

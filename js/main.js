@@ -1,4 +1,5 @@
 // js/main.js
+import "./ui/modal.js"; // ★ 추가: 전역 함수 등록용
 import { loadPCBangData } from "./api/pcbangAPI.js";
 import { initMap } from "./map/mapInit.js";
 import { handleSearch } from "./search/searchController.js";

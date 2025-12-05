@@ -12,15 +12,16 @@ export async function showNearbyWithT1(lat, lng, query) {
   const t1 = REAL_PCBANGS.find(p => p.name.includes("T1"));
   const t1Distance = calculateDistance(lat, lng, t1.lat, t1.lng);
 
-  // ★ T1 자체 주소도 받아올 수 있음 (원하면 추가)
-  const t1Address = await getAddress(t1.lat, t1.lng);
+  // ★ T1 주소도 cleanAddress 처리
+  const rawT1Address = await getAddress(t1.lat, t1.lng);
+  const t1Address = cleanAddress(rawT1Address);
 
   const names = ["ACE PC방", "플레이존", "제로PC", "탑PC방", "피닉스", "인벤PC", "라온PC", "포텐PC"];
 
   const allPCs = [{
     ...t1,
     distance: t1Distance,
-    address: t1Address // ★ 추가
+    address: t1Address
   }];
 
   for (let i = 0; i < 8; i++) {
@@ -32,7 +33,7 @@ export async function showNearbyWithT1(lat, lng, query) {
     const available = Math.floor(Math.random() * 40);
     const distance = calculateDistance(lat, lng, cafeLat, cafeLng);
 
-    // ★ 랜덤 PC방 주소 가져오기
+    // 랜덤 PC방 주소 가져오기 + 정리
     const rawAddress = await getAddress(cafeLat, cafeLng);
     const address = cleanAddress(rawAddress);
 
@@ -44,7 +45,7 @@ export async function showNearbyWithT1(lat, lng, query) {
       lat: cafeLat,
       lng: cafeLng,
       distance,
-      address // ★ 추가
+      address
     });
   }
 

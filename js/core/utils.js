@@ -19,3 +19,22 @@ export async function getAddress(lat, lng) {
   const data = await res.json();
   return data.display_name || "주소 정보를 불러올 수 없습니다.";
 }
+
+export function cleanAddress(raw) {
+  if (!raw) return "주소 정보를 불러올 수 없습니다.";
+
+  // 콤마로 분리
+  const parts = raw.split(",").map(p => p.trim());
+
+  // 가장 많이 쓰는 형태: 번호 + 도로명 + 구 + 시
+  // 예: "35, 잔다리로6길, 서교동, 마포구, 서울특별시, 04042, 대한민국"
+  // → "서울특별시 마포구 서교동 잔다리로6길 35"
+
+  let number = parts[0];           // "35"
+  let road = parts[1];             // "잔다리로6길"
+  let dong = parts[2];             // "서교동"
+  let district = parts[3];         // "마포구"
+  let city = parts[4];             // "서울특별시"
+
+  return `${city} ${district} ${dong} ${road} ${number}`;
+}

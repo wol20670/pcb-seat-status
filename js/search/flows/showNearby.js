@@ -1,7 +1,7 @@
 // js/search/flows/showNearby.js
 import { map } from "../../core/state.js";
 import { addMarker, clearMap } from "../../map/markers.js";
-import { calculateDistance, getAddress } from "../../core/utils.js";
+import { calculateDistance, getAddress, cleanAddress } from "../../core/utils.js";
 
 export async function showNearby(lat, lng, query) {
   clearMap();
@@ -22,7 +22,9 @@ export async function showNearby(lat, lng, query) {
     const distance = calculateDistance(lat, lng, cafeLat, cafeLng);
 
     // ★ 주소 요청 (Reverse Geocoding)
-    const address = await getAddress(cafeLat, cafeLng);
+    const rawAddress = await getAddress(cafeLat, cafeLng);
+    const address = cleanAddress(rawAddress);
+
 
     mocks.push({
       id: `mock-${i}`,

@@ -1,7 +1,7 @@
 // js/search/flows/showNearbyWithT1.js
 import { REAL_PCBANGS, map } from "../../core/state.js";
 import { addMarker, clearMap } from "../../map/markers.js";
-import { calculateDistance, getAddress } from "../../core/utils.js";
+import { calculateDistance, getAddress, cleanAddress } from "../../core/utils.js";
 
 export async function showNearbyWithT1(lat, lng, query) {
   clearMap();
@@ -33,7 +33,8 @@ export async function showNearbyWithT1(lat, lng, query) {
     const distance = calculateDistance(lat, lng, cafeLat, cafeLng);
 
     // ★ 랜덤 PC방 주소 가져오기
-    const address = await getAddress(cafeLat, cafeLng);
+    const rawAddress = await getAddress(cafeLat, cafeLng);
+    const address = cleanAddress(rawAddress);
 
     allPCs.push({
       id: "mock-" + i,

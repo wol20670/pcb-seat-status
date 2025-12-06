@@ -19,12 +19,8 @@ export async function showNearby(lat, lng, query) {
     const cafeLng = lng + r * Math.sin(theta);
 
     const available = Math.floor(Math.random() * 40);
-    const distance = calculateDistance(lat, lng, cafeLat, cafeLng);
-
-    // ★ 주소 요청 (Reverse Geocoding)
     const rawAddress = await getAddress(cafeLat, cafeLng);
     const address = cleanAddress(rawAddress);
-
 
     mocks.push({
       id: `mock-${i}`,
@@ -33,8 +29,8 @@ export async function showNearby(lat, lng, query) {
       lng: cafeLng,
       available,
       total: 40,
-      distance,
-      address // ★ 추가
+      distance: calculateDistance(lat, lng, cafeLat, cafeLng),
+      address
     });
   }
 
@@ -44,7 +40,6 @@ export async function showNearby(lat, lng, query) {
   list.innerHTML = `<h3>${query} 주변 PC방</h3>`;
 
   mocks.forEach(pc => {
-    // 마커 팝업에 주소까지 포함
     addMarker(
       pc.lat,
       pc.lng,
@@ -58,7 +53,9 @@ export async function showNearby(lat, lng, query) {
       <p class="status">주소: ${pc.address}</p>
       <p class="status">좌석 현황: ${pc.available} / ${pc.total}</p>
       <p class="status">거리: ${Math.round(pc.distance)}m</p>
-      <button onclick="openModal('${pc.id}', '${pc.name}')">좌석 보기</button>
+      <button onclick="openModal('${pc.id}', '${pc.name}', ${pc.available}, ${pc.total})">
+        좌석 보기
+      </button>
     `;
     list.appendChild(div);
   });

@@ -16,6 +16,14 @@ export function openModal(id, name) {
   if (!seatTimers[id]) seatTimers[id] = {};
 
   for (let i = 1; i <= 40; i++) {
+
+    // 10개씩 줄 나누기 (11, 21, 31...)
+    if (i === 11 || i === 21 || i === 31) {
+      const rowBreak = document.createElement("div");
+      rowBreak.className = "seat-row-break";
+      grid.appendChild(rowBreak);
+    }
+
     const div = document.createElement("div");
     let status = statuses[Math.floor(Math.random() * statuses.length)];
     div.className = `seat ${status}`;
@@ -40,6 +48,7 @@ export function openModal(id, name) {
 
     grid.appendChild(div);
   }
+
 }
 
 export function closeModal() {

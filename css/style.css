@@ -151,30 +151,48 @@ button:hover {
   }
 }
 
-/* 좌석 그리드 */
+/* ------------------------------ */
+/*          좌석 배치도           */
+/* ------------------------------ */
+
+/* 좌석 그리드 — 실제 PC방 느낌으로 개선 */
 .seat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
-  gap: 6px;
-  margin-top: 10px;
+  grid-template-columns: repeat(10, 32px); /* 한 줄 10좌석 */
+  gap: 8px 14px; /* 세로 8px(줄 간격), 가로 14px(통로) */
+  justify-content: center;
+  margin-top: 18px;
+  padding: 20px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+/* 줄 사이 통로 */
+.seat-row-break {
+  grid-column: 1 / -1;
+  height: 16px;
 }
 
 /* 좌석 */
 .seat {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: white;
   cursor: pointer;
-  transition: transform 0.1s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+  transition: transform 0.1s ease-in-out, box-shadow 0.15s;
 }
 
 .seat:hover {
-  transform: scale(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
 }
 
 /* 좌석 상태 색상 */
@@ -200,7 +218,7 @@ button:hover {
   background: #111827;
 }
 
-/* ✅ 모바일 UI 최적화 구간 추가 */
+/* 모바일 UI 최적화 */
 @media (max-width: 768px) {
   body {
     font-size: 15px;
@@ -256,14 +274,20 @@ button:hover {
     overflow-y: auto;
     padding: 16px;
   }
+
+  /* 모바일 좌석 최적화 */
   .seat-grid {
-    grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
-    gap: 5px;
+    grid-template-columns: repeat(8, 28px);
+    gap: 6px 10px;
+    padding: 14px;
   }
   .seat {
     width: 28px;
     height: 28px;
     font-size: 0.65rem;
+  }
+  .seat-row-break {
+    height: 12px;
   }
   .close-btn {
     width: 100%;
@@ -271,4 +295,3 @@ button:hover {
     margin-top: 12px;
   }
 }
-/* ✅ 모바일 UI 최적화 구간 추가 끝 */

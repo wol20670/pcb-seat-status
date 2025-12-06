@@ -21,7 +21,7 @@ export async function showSinglePC(pc) {
     <div class="pcbang-card">
       <h3>${pc.name}</h3>
       <p class="status">주소: ${address}</p>
-      <p class="status">좌석 현황: ${pc.available} / ${pc.total}</p>
+      <p class="status">남은 좌석 현황: ${pc.available} / ${pc.total}</p>
       <button onclick="openModal('${pc.id}', '${pc.name}', ${pc.available}, ${pc.total})">
         좌석 보기
       </button>

@@ -62,7 +62,7 @@ export async function showNearbyWithT1(lat, lng, query) {
     div.innerHTML = `
       <h3>${pc.name}</h3>
       <p class="status">주소: ${pc.address}</p>
-      <p class="status">좌석 현황: ${pc.available} / ${pc.total}</p>
+      <p class="status">남은 좌석 현황: ${pc.available} / ${pc.total}</p>
       <p class="status">거리: ${Math.round(pc.distance)}m</p>
       <button onclick="openModal('${pc.id}', '${pc.name}', ${pc.available}, ${pc.total})">
         좌석 보기

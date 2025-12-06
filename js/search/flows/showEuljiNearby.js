@@ -30,7 +30,7 @@ export async function showEuljiNearby(lat, lng, query) {
   div.innerHTML = `
     <h3>${oneTop.name}</h3>
     <p class="status">주소: ${address}</p>
-    <p class="status">좌석 현황: ${oneTop.available} / ${oneTop.total}</p>
+    <p class="status">남은 좌석 현황: ${oneTop.available} / ${oneTop.total}</p>
     <p class="status">거리: ${Math.round(dist)}m</p>
     <button onclick="openModal('${oneTop.id}', '${oneTop.name}', ${oneTop.available}, ${oneTop.total})">
       좌석 보기
